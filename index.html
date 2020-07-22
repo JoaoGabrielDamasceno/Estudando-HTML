@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios HTML</title>
+</head>
+<body>
+    <header>
+        <h1>Exercícios HTML</h1>
+    </header>
+    <nav>
+        <a href wm-nav="exercicio/teste.html"> 00 - Teste </a>
+    </nav>
+    <section id="conteudo"></section>
+    <footer>
+        <br><br>
+        Estudando Web
+    </footer>
+    <script>
+        //o wm-nav foi adicionado ao invés de 'a' pois estou pegando os links que tem esse atributo ao invés de pegar todos links
+        //percorrendo todos os links através de querySelectorAll em cima das tags 'a'
+        document.querySelectorAll('[wm-nav]').forEach(link =>{
+            const conteudo = document.getElementById('conteudo')
+
+            link.onclick = function(e){ //função para o click
+                //evita que o comportamento padrão ocorra
+                e.preventDefault()
+                //chamada AJAX através desse link pegado
+                fetch(link.getAttribute('wm-nav'))
+                .then(resp => resp.text()) //pegar o conteúdo html dessa requisição
+                .then(html => conteudo.innerHTML = html) //to jogando dentro de conteúdo esse html que foi pego
+            }
+        })
+    </script>
+</body>
+</html>
