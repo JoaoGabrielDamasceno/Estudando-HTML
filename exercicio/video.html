@@ -1,0 +1,55 @@
+<video id= "meuVideo" width="800" height="450" controls autoplay controlsList="nodownload">
+    <source src="http://files.cod3r.com.br/curso-web/video.mp4" type="video/mp4">
+        Seu brownser não carrega esse vídeo!
+</video>
+
+<!-- A div de fora responsavel por renderizar a parte de fora e a div de dentro o progesso -->
+<div wm-progresso="meuVideo" class="progresso">
+    <div></div>
+</div>
+
+<div>
+    <button wm-play="meuVideo">Play</button>
+    <button wm-pause="meuVideo">Pause</button>
+</div>
+
+<style>
+    .progresso {
+        height: 20px;
+        width: 500px;
+        border: solid 1px #444;
+        margin: 20px;
+    }
+
+    .progresso > div {
+        background-color: red;
+        color: white;
+        height: 20px;
+        text-align: right;
+        font-size: 14px;
+        width: 0%;
+    }
+</style>
+
+<script>
+    function configurarVideo(id) {
+        const video = document.getElementById(id)
+        //para não mostrar opções quando clicka com o direito no vídeo
+        video.oncontextmenu = () => false
+
+        document.querySelector(`[wm-play=${id}`).onclick = e => video.play()
+        document.querySelector(`[wm-pause=${id}`).onclick = e => video.pause()
+
+         setInterval(() => {
+            const percentual = (video.currentTime / video.duration ) * 100
+            const valorDiv = document.querySelector(`[wm-progresso=${id}] > div`)
+
+            valorDiv.style.width = `${percentual}%`
+            valorDiv.innerHTML = `${percentual.toFixed(1)}%`
+        }, 500)
+
+    }
+
+       
+    configurarVideo('meuVideo')
+</script>
